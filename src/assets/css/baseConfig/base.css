@@ -1,0 +1,50 @@
+@import "normalize.css";
+
+:root {
+  --color-text: #666;
+  --color-height-text: #ff5777;
+  --color-tint: #ff8198;
+  --color-background: #fff;
+  --font-size: 14px;
+  --line-height: 1.5;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Leelawadee UI Semilight";
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  /*width: 100vh;*/
+}
+
+a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.clear-fix {
+  zoom: 1;
+}
+
+.clear-fix::after {
+  clear: both;
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
