@@ -11,14 +11,16 @@
     </div>
   </div>
 </template>
-
 <script>
+  //一条常用的流式顶部bar，左中右，左右小按钮，中间长title
+  //参照调用 navbar>div[slot="center"]{今日热门}
   export default {
     name: "NavBar"
   }
 </script>
 
 <style scoped>
+  /*使用防挤可使用top:0*/
   #navBar {
     display: flex;
     position: fixed;
@@ -27,6 +29,7 @@
     line-height: 44px;
     text-align: center;
     box-shadow: 0 1px 1px rgba(100, 100, 100, 0.2);
+    z-index: 9;
   }
 
   .left, .right {

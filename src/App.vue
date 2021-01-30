@@ -1,19 +1,20 @@
 <template>
   <div id = "app">
-    <router-view/>
+    <keep-alive exclude = "Detail">
+      <router-view/>
+    </keep-alive>
     <mainTabBar/>
   </div>
 </template>
 
 <script>
-  import mainTabBar from "components/content/mainTabBar/mainTabBar";
+  import mainTabBar from "components/content/maintabbar/mainTabBar";
 
   export default {
     name: "App",
     components: {
       mainTabBar
-    },
-    methods: {}
+    }
   }
 </script>
 <style lang = "stylus">

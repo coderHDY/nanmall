@@ -4,39 +4,52 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 const Home = () => import('views/home/Home.vue');
 const Category = () => import('views/category/Category.vue');
-const Cert = () => import('views/cert/Cert.vue');
+const Cert = () => import('views/cart/Cert.vue');
 const Me = () => import('views/me/Me.vue');
+const Detail = () => import('views/detail/Detail.vue');
 const routes = [
   {
     path: '/',
-    redirect: "/Home"
-  }, {
-    path: '/Home',
-    name: 'Home',
+    redirect: "/home"
+  },
+  {
+    path: '/home',
+    name: 'home',
     component: Home,
     meta: {
       title: "首页"
     }
-  }, {
-    path: '/Category',
-    name: 'Category',
+  },
+  {
+    path: '/category',
+    name: 'category',
     component: Category,
     meta: {
       title: "分类"
     }
-  }, {
-    path: '/Cert',
-    name: 'Cert',
+  },
+  {
+    path: '/cart',
+    name: 'cart',
     component: Cert,
     meta: {
       title: "购物车"
     }
-  }, {
-    path: '/Me',
-    name: 'Me',
+  },
+  {
+    path: '/me',
+    name: 'me',
     component: Me,
     meta: {
       title: "我的"
+    }
+  },
+  {
+    path: '/detail',
+    name: 'detail',
+    component: Detail,
+    meta: {
+      title: "商品详情"
     }
   },
 ]
