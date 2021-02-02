@@ -3,7 +3,7 @@
     <div class = "desc">{{detailInfo.desc}}</div>
     <div class = "img-box">
       <img class = "detailImage" v-for = "item in detailInfo.detailImage"
-           :src = "item" @load = "ImageLoad">
+           :src = "'http://'+item" @load = "ImageLoad">
     </div>
   </div>
 </template>

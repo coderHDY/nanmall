@@ -30,7 +30,7 @@
   import GoodsList from "components/content/goods/GoodsList";
   import Scroll from "components/common/scroll/Scroll";
   import BackTop from "components/common/scroll/BackTop";
-  import { debounce } from "components/common/utils/utils";
+  import { debounce, mixin } from "components/common/utils/utils";
 
   export default {
     name: "Home.vue",
@@ -44,6 +44,7 @@
       Scroll,
       BackTop
     },
+    mixins: [ mixin ],
     data() {
       return {
         banners: [],
@@ -54,7 +55,6 @@
           "new": { page: 0, list: [] },
           "sell": { page: 0, list: [] },
         },
-        isShowBack: false,
         tabOffsetTop: null,
         showTabOffsetTop: false,
         lastY: 0
@@ -103,15 +103,6 @@
         this.$refs.scroll.backTop(0, -this.tabOffsetTop);
         this.$refs.tabControl1.current_index = currentIndex;
         this.$refs.tabControl2.current_index = currentIndex;
-      },
-      // 回到顶部按钮监听
-      backTop() {
-        this.$refs.scroll.backTop()
-      },
-      //监听滚动事件
-      scroll(position) {
-        this.isShowBack = position["y"] <= -1000;
-        this.showTabOffsetTop = position["y"] <= -this.tabOffsetTop;
       },
       //底部刷新事件
       pullingUp() {

@@ -1,14 +1,22 @@
 <template>
-  <nav-bar class = "home-nav">
-    <div slot = "center">今日热门</div>
-  </nav-bar>
+  <NavBar class = "cart-nav-bar">
+    <div slot = "center">
+      购物车({{length}})
+    </div>
+  </NavBar>
 </template>
 
 <script>
   import NavBar from "components/common/navbar/NavBar";
 
   export default {
-    name: "HomeNavBar",
+    name: "CartNavBar",
+    props: {
+      length: {
+        type: Number,
+        default: 0
+      }
+    },
     components: {
       NavBar
     }
@@ -16,11 +24,10 @@
 </script>
 
 <style scoped>
-  .home-nav {
+  .cart-nav-bar {
     top: 0;
-    left: 0;
-    right: 0;
     background-color: var(--color-tint);
     color: #fff;
+    font-size: 18px;
   }
 </style>

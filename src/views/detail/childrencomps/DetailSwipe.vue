@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <Swiper class = "topImages">
-      <SwiperItem v-for = "item in topImages">
-        <a href = "#">
-          <img :src = "item">
-        </a>
-      </SwiperItem>
-    </Swiper>
-  </div>
+  <Swiper class = "topImages">
+    <SwiperItem v-for = "item in topImages">
+      <img :src = "'http://'+item">
+    </SwiperItem>
+  </Swiper>
 </template>
 
 <script>

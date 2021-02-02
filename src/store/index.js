@@ -6,7 +6,9 @@ import getters from "./getters"
 
 Vue.use(Vuex)
 export default new Vuex.Store({
-  state: {},
+  state: {
+    cartList: []
+  },
   modules: {},
   mutations,
   actions,

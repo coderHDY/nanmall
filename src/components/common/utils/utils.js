@@ -33,3 +33,23 @@ export function formatDate(date, fmt) {
 function padLeftZero(str) {
   return ("00" + str).substr(str.length);
 }
+
+export const mixin = {
+  data() {
+    return {
+      isShowBack: false
+    }
+  },
+  methods: {
+    //监听滚动事件
+    scroll(position) {
+      this.isShowBack = position["y"] <= -1000;
+      if (this.showTabOffsetTop !== undefined) {
+        this.showTabOffsetTop = position["y"] <= -this.tabOffsetTop;
+      }
+    },
+    backTop() {
+      this.$refs.scroll.backTop()
+    },
+  }
+}

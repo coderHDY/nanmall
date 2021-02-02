@@ -1,5 +1,5 @@
 <template>
-  <GoodsList :goods = "recommend"></GoodsList>
+  <GoodsList :goods = "recommend"/>
 </template>
 
 <script>

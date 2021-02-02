@@ -62,7 +62,7 @@
     padding-left: 5px;
   }
 
-  .info td:nth-child(1) {
+  .info td:nth-child(1), .rule td:nth-child(1) {
     border-right: 1px solid #878eb8;
     width: 80px;
   }

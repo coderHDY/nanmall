@@ -2,9 +2,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
+//解决编程式路由往同一地址跳转时会报错的情况
+const originalPush = VueRouter.prototype.push
+const originalReplace = VueRouter.prototype.replace
+//push
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+//replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+  return originalReplace.call(this, location).catch(err => err)
+}
 const Home = () => import('views/home/Home.vue');
 const Category = () => import('views/category/Category.vue');
-const Cert = () => import('views/cart/Cert.vue');
+const Cart = () => import('views/cart/Cart.vue');
 const Me = () => import('views/me/Me.vue');
 const Detail = () => import('views/detail/Detail.vue');
 const routes = [
@@ -31,7 +44,7 @@ const routes = [
   {
     path: '/cart',
     name: 'cart',
-    component: Cert,
+    component: Cart,
     meta: {
       title: "购物车"
     }
@@ -55,13 +68,12 @@ const routes = [
 ]
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  // mode: 'history' //需要其他配置
 })
 //router中定义的方法
-router.beforeEach((to, from, next) => {
-  if (document.title != to.matched[0].meta.title) {
+router.afterEach((to, from) => {
+  if (to.matched[0] && document.title != to.matched[0].meta.title) {
     document.title = to.matched[0].meta.title
   }
-  next()
 })
 export default router

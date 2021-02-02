@@ -1,16 +1,19 @@
 <template>
   <div id = "detail">
-    <DetailNavBar/>
-    <Scroll class = "scroll" ref = "scroll">
+    <DetailNavBar @navBarClick = "navBarClick" :currentIndex = "currentIndex"/>
+    <Scroll class = "scroll" ref = "scroll"
+            :probeType.Number = 3
+            @scroll = "scroll">
       <DetailSwipe :topImages = "topImages"/>
       <DetailBaseInfo :good-info = "goodInfo"/>
       <DetailShopInfo :shop-info = "shopInfo"/>
       <DetailInfo :detail-info = "detailInfo"/>
-      <Rate :cRate = "cRate" :rate = "rate"/>
-      <ItemParams :itemParams = "itemParams"/>
-      <DetailRecommend :recommend = "recommend"/>
+      <Rate :cRate = "cRate" :rate = "rate" ref = "rate"/>
+      <ItemParams :itemParams = "itemParams" ref = "itemParams"/>
+      <DetailRecommend :recommend = "recommend" ref = "recommend"/>
     </Scroll>
-    <DetailTabBar/>
+    <BackTop @click.native = "backTop" v-show = "isShowBack"/>
+    <DetailTabBar @addCart = "addCart"/>
   </div>
 </template>
 
@@ -26,10 +29,12 @@
   import DetailTabBar from "./childrencomps/DetailTabBar";
   import Rate from "./childrencomps/Rate";
   import Scroll from "components/common/scroll/Scroll";
-  import { debounce } from "components/common/utils/utils";
+  // 外部模块
+  import { debounce, mixin } from "components/common/utils/utils";
   import ItemParams from "./childrencomps/ItemParams";
   import DetailRecommend from "./childrencomps/DetailRecommend";
-  // 外部模块
+  import BackTop from "components/common/scroll/BackTop";
+
   export default {
     name: "Detail",
     data() {
@@ -43,9 +48,14 @@
         rate: [],
         cRate: 1,
         itemParams: null,
-        recommend: null
+        recommend: null,
+        offsetY: [ 0, 0, 0, 0 ],
+        offsetRefresh: null, //防抖函数两个
+        heightRefresh: null,
+        currentIndex: 0
       }
     },
+    mixins: [ mixin ],
     components: {
       DetailNavBar,
       DetailSwipe,
@@ -56,11 +66,13 @@
       DetailTabBar,
       Rate,
       ItemParams,
-      DetailRecommend
+      DetailRecommend,
+      BackTop,
     },
     created() {
       //拿到Good全部信息且分给各个组件
       this.initData();
+      this.offsetRefresh = debounce(this.calcOffset, 300);
     },
     methods: {
       initData() {
@@ -74,7 +86,6 @@
             desc: this.good.detailInfo.desc,
             detailImage: this.good.detailInfo.detailImage[0].list
           };
-          // console.log(this.good.rate.list);
           this.rate = this.good.rate.list;
           this.cRate = this.good.rate.cRate;
           this.itemParams = this.good.itemParams
@@ -82,19 +93,46 @@
         recommendRequest().then(res => {
           this.recommend = res.data.list
         })
+      },
+      navBarClick(index) {
+        this.$refs.scroll.scroll.scrollTo(0, -this.offsetY[index], 300)
+      },
+      calcOffset() {
+        // 查找各关键挂载点的offset并保存
+        if (this.$refs.rate) this.offsetY[1] = this.$refs.rate.$el.offsetTop
+        if (this.$refs.itemParams) this.offsetY[2] = this.$refs.itemParams.$el.offsetTop
+        if (this.$refs.recommend) this.offsetY[3] = this.$refs.recommend.$el.offsetTop
+      },
+      scroll(position) {
+        // 传入位置定义顶部显示栏谁变红色
+        if (position["y"] <= -this.offsetY[3]) {
+          this.currentIndex = 3
+        } else if (position["y"] <= -this.offsetY[2]) {
+          this.currentIndex = 2
+        } else if (position["y"] <= -this.offsetY[1]) {
+          this.currentIndex = 1
+        } else {
+          this.currentIndex = 0
+        }
+      },
+      addCart() {
+        const good = {
+          iid: this.iid,
+          image: "http://" + this.topImages[0],
+          title: this.goodInfo.title,
+          price: this.goodInfo.lowPrice || this.goodInfo.realPrice || this.goodInfo.this.newPrice,
+          number: 1,
+          isChecked: false
+        };
+        this.$store.dispatch("addCart", good)
       }
     },
     mounted() {
-      // scroll判断加载刷新
-      // 封装防抖函数
-      const refresh = debounce(this.$refs.scroll.refresh, 200)
+      this.heightRefresh = debounce(this.$refs.scroll.refresh, 100);
       this.$bus.$on("detailImageLoad", () => {
-        refresh()
-      })
-      // 监听点击推荐商品
-      this.$bus.$on("goodChange", () => {
-        this.initData()
-      })
+        this.heightRefresh();
+        this.offsetRefresh()
+      });
     }
   }
 </script>

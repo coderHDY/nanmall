@@ -1,7 +1,7 @@
 <template>
   <div class = "shop-info">
     <div class = "shop">
-      <img :src = "shopInfo.logo" class = "shop-img" @load = "ImageLoad">
+      <img :src = "'http://'+shopInfo.logo" class = "shop-img">
       <span class = "shop-name">{{shopInfo.name}}</span>
     </div>
 
@@ -39,12 +39,6 @@
         default() {
           return {}
         }
-      }
-    },
-    methods: {
-      // ????
-      ImageLoad() {
-        this.$bus.$emit("detailImageLoad")
       }
     },
     computed: {

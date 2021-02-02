@@ -7,11 +7,6 @@
 <script>
   export default {
     name: "BackTop",
-    methods:{
-      backTop(){
-        this.$emit("backTop")
-      }
-    }
   }
 </script>
 

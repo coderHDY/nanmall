@@ -5,7 +5,7 @@
       <div class = "nav-bar-item"
            v-for = "(item,index) in cate"
            @click = "navBarClick(index)"
-           :class = "{'active':currentIndex === index}">
+           :class = "{'active':current_index === index}">
         {{item}}
       </div>
     </div>
@@ -21,18 +21,32 @@
     components: {
       NavBar
     },
+    props: {
+      currentIndex: {
+        type: Number,
+        default: 0
+      }
+    },
     data() {
       return {
-        cate: [ "商品", "参数", "评论", "推荐" ],
-        currentIndex: 0
+        cate: [ "商品", "评论", "参数", "推荐" ],
+        current_index: this.currentIndex
       }
     },
     methods: {
       navBarClick(index) {
-        this.currentIndex = index
+        if (this.current_index !== index) {
+          this.current_index = index
+          this.$emit("navBarClick", index)
+        }
       },
       back() {
         this.$router.back()
+      }
+    },
+    watch: {
+      currentIndex() {
+        this.current_index = this.currentIndex
       }
     }
   }

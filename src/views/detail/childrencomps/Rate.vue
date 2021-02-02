@@ -1,12 +1,12 @@
 <template>
-  <div class = "rate" v-if = "rate[0]">
+  <div class = "rate">
     <div class = "comment-title">
       <p>
         用户评论<span>({{cRate}}条)</span>
         <span class = "more-comment">更多&gt;&gt;</span>
       </p>
     </div>
-    <div v-if = "rate[0].user">
+    <div v-if = "rate[0]">
       <div class = "user">
         <img :src = "rate[0].user.avatar" class = "user-img">
         <div class = "user-name">{{rate[0].user.uname}}:
@@ -39,7 +39,7 @@
       rate: {
         type: Array,
         default() {
-          return [ '1' ]
+          return []
         }
       },
       cRate: Number

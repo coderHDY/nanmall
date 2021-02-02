@@ -12,7 +12,7 @@
       <img src = "~assets/img/detail/star.svg">
       <div>收藏</div>
     </div>
-    <div class = "tabBar-add-cert">
+    <div class = "tabBar-add-cert" @click="addCart">
       <span>加入购物车</span>
     </div>
     <div class = "tabBar-buy">
@@ -23,7 +23,12 @@
 
 <script>
   export default {
-    name: "DetailTabBar"
+    name: "DetailTabBar",
+    methods:{
+      addCart(){
+        this.$emit("addCart")
+      }
+    }
   }
 </script>
 
