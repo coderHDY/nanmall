@@ -13,7 +13,7 @@
       <DetailRecommend :recommend = "recommend" ref = "recommend"/>
     </Scroll>
     <BackTop @click.native = "backTop" v-show = "isShowBack"/>
-    <DetailTabBar @addCart = "addCart"/>
+    <DetailTabBar @addCart = "addCart" @buy = "buy"/>
   </div>
 </template>
 
@@ -118,13 +118,18 @@
       addCart() {
         const good = {
           iid: this.iid,
-          image: "http://" + this.topImages[0],
+          image: this.topImages[0],
           title: this.goodInfo.title,
           price: this.goodInfo.lowPrice || this.goodInfo.realPrice || this.goodInfo.this.newPrice,
           number: 1,
           isChecked: false
         };
-        this.$store.dispatch("addCart", good)
+        this.$store.dispatch("addCart", good).then(res => {
+          this.$toast.show(res)
+        })
+      },
+      buy() {
+        this.$toast.show("这是个人作品网站，没有商业性质，别乱花钱哦！", 4000)
       }
     },
     mounted() {
@@ -147,7 +152,7 @@
     overflow: hidden;
     height: 100vh;
     background-color: #ffffff;
-    z-index: 9;
+    /*z-index: 9;*/
   }
 
   .scroll {

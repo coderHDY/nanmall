@@ -37,7 +37,7 @@
     },
     methods: {
       itemClick() {
-        if (this.$router.currentRoute.path !== this.link) {
+        if (this.$router.currentRoute.path.indexOf(this.link) === -1) {
           this.$router.replace(this.link);
         }
       }
@@ -48,7 +48,6 @@
 <style scoped>
 
   .tab-bar-item {
-    height: 49px;
     flex: 1;
     text-align: center;
     font-size: 13px;

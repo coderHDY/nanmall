@@ -1,7 +1,7 @@
 <template>
   <div class = "shop-info">
     <div class = "shop">
-      <img :src = "'http://'+shopInfo.logo" class = "shop-img">
+      <img :src = "shopInfo.logo" class = "shop-img">
       <span class = "shop-name">{{shopInfo.name}}</span>
     </div>
 

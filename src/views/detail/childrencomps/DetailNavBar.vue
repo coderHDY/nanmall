@@ -56,6 +56,8 @@
   .nav-bar {
     top: 0;
     background-color: #f3f3f3;
+    left: 0;
+    right: 0;
   }
 
   .nav-bar-center {

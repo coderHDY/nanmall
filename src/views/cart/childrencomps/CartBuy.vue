@@ -8,7 +8,7 @@
       <div class = "price-box">
         <span class = "price">￥{{totlePrice}}</span>
       </div>
-      <div class = "buy">
+      <div class = "buy" @click = "buy">
         购买
       </div>
     </div>
@@ -39,8 +39,8 @@
         return this.$store.state.cartList.length
       },
       isChecked() {
-        return this.$store.state.cartList.find(item => item.isChecked === false) === undefined
-        // return false
+        return this.$store.state.cartList.find(item => !item.isChecked) === undefined
+        // true是是全选了
       }
     },
     methods: {
@@ -50,6 +50,9 @@
         } else {
           this.$store.commit(SELECT_ALL)
         }
+      },
+      buy() {
+        this.$emit("buy")
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <Swiper class = "topImages">
     <SwiperItem v-for = "item in topImages">
-      <img :src = "'http://'+item">
+      <img :src = "item">
     </SwiperItem>
   </Swiper>
 </template>

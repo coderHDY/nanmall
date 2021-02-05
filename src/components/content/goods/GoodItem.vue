@@ -1,10 +1,13 @@
 <template>
   <div class = "good-item" @click = "toDetail">
-    <img :src = "image" @load = "imageLoad">
+    <a :href = "goodItem.link" :class = "{'active':isUseful}">
+      <img v-lazy = "image" @load = "imageLoad">
+    </a>
+
     <div class = "good-info">
       <p class = "good-title">{{goodItem.title}}</p>
-      <span class = "price">￥{{goodItem.price}}</span>
-      <span class = "cfav">☆{{goodItem.cfav}}</span>
+      <span class = "price" v-if = "goodItem.price">￥{{goodItem.price}}</span>
+      <span class = "cfav" v-if = "goodItem.cfav">☆{{goodItem.cfav}}</span>
     </div>
   </div>
 </template>
@@ -23,22 +26,32 @@
     computed: {
       image() {
         return this.goodItem.image || this.goodItem.show.img
+      },
+      isUseful() {
+        return this.$route.path.indexOf("/category") === -1
       }
     },
     methods: {
       toDetail() {
-        this.$router.push({
-          path: "detail",
-          query: {
-            iid: this.goodItem.iid
-          }
-        })
+        if (this.$route.path.indexOf("/home") !== -1) {
+          this.$router.push({
+            path: "detail",
+            query: {
+              iid: this.goodItem.iid
+            }
+          })
+        } else if (this.$route.path.indexOf("/category") !== -1) {
+          return
+        }
       },
       imageLoad() {
         if (this.$route.path.indexOf("/home") !== -1) {
           this.$bus.$emit("homeImageLoad")
         } else if (this.$route.path.indexOf("/detail") !== -1) {
           this.$bus.$emit("detailImageLoad")
+        }
+        if (this.$route.path.indexOf("/category") !== -1) {
+          this.$bus.$emit("categoryImageLoad")
         }
       }
     }
@@ -83,4 +96,7 @@
     margin-right: 20px;
   }
 
+  .active {
+    pointer-events: none;
+  }
 </style>

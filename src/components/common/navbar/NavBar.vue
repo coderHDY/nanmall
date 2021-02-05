@@ -1,5 +1,5 @@
 <template>
-  <div id = "navBar">
+  <div class = "navBar">
     <div class = "left">
       <slot name = "left"></slot>
     </div>
@@ -21,7 +21,7 @@
 
 <style scoped>
   /*使用防挤可使用top:0*/
-  #navBar {
+  .navBar {
     display: flex;
     position: fixed;
     width: 100%;

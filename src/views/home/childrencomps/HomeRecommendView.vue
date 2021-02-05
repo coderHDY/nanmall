@@ -3,7 +3,7 @@
     <Recommend>
       <RecommendItem v-for = "items in recommends">
         <a :href = "items.link">
-          <img :src = "items.image"/>
+          <img :src = "items.image" @load = "imageLoad"/>
           <div>{{items.title}}</div>
         </a>
       </RecommendItem>
@@ -25,9 +25,22 @@
         }
       }
     },
+    data() {
+      return {
+        isEmit: false
+      }
+    },
     components: {
       Recommend,
       RecommendItem
+    },
+    methods: {
+      imageLoad() {
+        if (!this.isEmit) {
+          this.$emit("imageLoad")
+          this.isEmit = true
+        }
+      }
     }
   }
 </script>

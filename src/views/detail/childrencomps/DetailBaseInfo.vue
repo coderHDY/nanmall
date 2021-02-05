@@ -13,7 +13,7 @@
     </div>
     <div class = "services">
       <div v-for = "item in goodInfo.services" class = "service">
-        <img :src = "'http://'+item.icon" class = "service-icon" v-if = "item.icon">
+        <img :src = "item.icon" class = "service-icon" v-if = "item.icon">
         <span class = "service-name">{{item.name}}</span>
       </div>
     </div>

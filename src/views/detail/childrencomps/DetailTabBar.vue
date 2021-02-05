@@ -12,10 +12,10 @@
       <img src = "~assets/img/detail/star.svg">
       <div>收藏</div>
     </div>
-    <div class = "tabBar-add-cert" @click="addCart">
+    <div class = "tabBar-add-cert" @click = "addCart">
       <span>加入购物车</span>
     </div>
-    <div class = "tabBar-buy">
+    <div class = "tabBar-buy" @click = "buy">
       <div>购买</div>
     </div>
   </div>
@@ -24,9 +24,12 @@
 <script>
   export default {
     name: "DetailTabBar",
-    methods:{
-      addCart(){
+    methods: {
+      addCart() {
         this.$emit("addCart")
+      },
+      buy() {
+        this.$emit("buy")
       }
     }
   }
@@ -41,7 +44,8 @@
     bottom: 0;
     background-color: #ffffff;
     text-align: center;
-    box-shadow: 0 0px 2px rgba(100, 100, 100, 0.2);
+    box-shadow: 0 2px 2px rgba(100, 100, 100, 0.2);
+    z-index: 999 !important;
   }
 
   .tabBar-shop,

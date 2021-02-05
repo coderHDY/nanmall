@@ -50,7 +50,7 @@
         this.handleDom();
         // 2.开启定时器
         this.startTimer();
-      }, 500)
+      }, 3000)
     },
     methods: {
       /**
@@ -188,7 +188,6 @@
   #hy-swiper {
     overflow: hidden;
     position: relative;
-    /*top: 44px;*/
   }
 
   .swiper {

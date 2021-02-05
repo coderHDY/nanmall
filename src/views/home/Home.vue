@@ -6,8 +6,8 @@
     <Scroll class = "scroll" ref = "scroll"
             :probeType.Number = 3 :pullUpLoad.Boolean = "true"
             @scroll = "scroll" @pullingUp = "pullingUp">
-      <HomeSwipe :banners = "banners" class = "home-swipe" @imageLoad = "imageLoad"></HomeSwipe>
-      <HomeRecommendView :recommends = "recommends"></HomeRecommendView>
+      <HomeSwipe :banners = "banners" class = "home-swipe" @imageLoad = "imageLoad"/>
+      <HomeRecommendView :recommends = "recommends" @imageLoad = "imageLoad"/>
       <FeatureView/>
       <TabControl ref = "tabControl2" class = "tab-control2" :items = "['流行','新款','精选']" @TabClick = "changeGoods"/>
       <GoodsList :goods = "currentType"/>
@@ -85,6 +85,7 @@
       //获取初始页面顶部数据
       getHomeMutlidata() {
         homeInitRequest().then(res => {
+          // console.log(res);
           this.banners = res.data.banner.list;
           this.recommends = res.data.recommend.list;
         })

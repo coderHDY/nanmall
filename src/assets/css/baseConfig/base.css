@@ -1,4 +1,8 @@
 @import "normalize.css";
+/*pan-y表示启用单指垂直平移手势(上下滑动事件)*/
+* {
+  touch-action: pan-y;
+}
 
 :root {
   --color-text: #666;
